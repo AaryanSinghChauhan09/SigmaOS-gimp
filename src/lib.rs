@@ -1,31 +1,39 @@
-// SPDX-License-Identifier: Apache-2.0
-//! SigmaOS-gimp - Multimedia/Office/Networking component
-//! Part of SigmaOS multi-repository architecture
+//! SigmaOS-gimp - SigmaOS Component
+//!
+//! Desktop and productivity component for SigmaOS.
 
-#![no_std]
+use anyhow::Result;
+use log::info;
+use serde::{Deserialize, Serialize};
 
-/// Component
-pub struct Component {
-    name: &'static str,
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Config {
+    pub enabled: bool,
+    pub desktop_integration: bool,
 }
 
-impl Component {
-    pub fn new() -> Self {
-        Self { name: "SigmaOS-gimp" }
-    }
-}
-
-impl Default for Component {
+impl Default for Config {
     fn default() -> Self {
-        Self::new()
+        Self { enabled: true, desktop_integration: true }
     }
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_creation() {
-        let c = super::Component::new();
-        assert_eq!(c.name, "SigmaOS-gimp");
+pub struct gimp {
+    config: Config,
+}
+
+impl gimp {
+    pub fn new(config: Config) -> Self {
+        Self { config }
+    }
+
+    pub fn initialize(&mut self) -> Result<()> {
+        info!("Initializing SigmaOS-gimp");
+        Ok(())
+    }
+
+    pub fn launch(&mut self) -> Result<()> {
+        info!("Launching SigmaOS-gimp");
+        Ok(())
     }
 }
